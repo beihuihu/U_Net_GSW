@@ -15,9 +15,9 @@ def imageAugmentationWithIAA():
         # Basic aug without changing any values
         iaa.Fliplr(0.5),  # horizontally flip 50% of all images 
         iaa.Flipud(0.2),  # vertically flip 20% of all images 
-        sometimes(iaa.Crop(percent=(0, 0.1))),  # random crops
-        sometimes(iaa.PiecewiseAffine(0.05), 0.3),
-        sometimes(iaa.PerspectiveTransform(0.01), 0.1)
+        # sometimes(iaa.Crop(percent=(0, 0.1))),  # random crops
+        # sometimes(iaa.PiecewiseAffine(0.05), 0.3),
+        # sometimes(iaa.PerspectiveTransform(0.01), 0.1)
     ],
         random_order=True)
     return seq
@@ -61,14 +61,14 @@ class DataGenerator():
         return (img, ann)
 
     # Return a batch of training and label images, generated randomly
-    def random_patch(self, BATCH_SIZE,percentages):
+    def random_patch(self, BATCH_SIZE):#,percentages
         """Generate patches from random location in randomly chosen frames.
         Args:
             BATCH_SIZE (int): Number of patches to generate (sampled independently). 8
         """
         patches = []
         for i in range(BATCH_SIZE):
-            frame = np.random.choice(self.frames,p=percentages)
+            frame = np.random.choice(self.frames)#,p=percentages
             patch = frame.random_patch(self.patch_size)
             patches.append(patch)
 #             while True:
@@ -83,7 +83,7 @@ class DataGenerator():
         ann_joint = data[..., self.annotation_channel]#[1]
         return (img, ann_joint)
     
-    def random_generator(self, BATCH_SIZE,percentages = None, normalize = 0):
+    def random_generator(self, BATCH_SIZE):#,percentages = None
         """Generator for random patches, yields random patches from random location in randomly chosen frames.
         Args:
             BATCH_SIZE (int): Number of patches to generate in each yield (sampled independently).  
@@ -92,7 +92,7 @@ class DataGenerator():
         seq = imageAugmentationWithIAA()
 
         while True:
-            X, y = self.random_patch(BATCH_SIZE,percentages)
+            X, y = self.random_patch(BATCH_SIZE)#,percentages
             if self.augmenter == 'iaa':   #augmenter = 'iaa'  
                 seq_det = seq.to_deterministic()
                 X = seq_det.augment_images(X)

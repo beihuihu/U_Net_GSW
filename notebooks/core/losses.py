@@ -15,8 +15,8 @@ def tversky(y_true, y_pred, alpha=0.5, beta=0.5):
     :return: the loss
     """  
     
-    y_true_pos = K.flatten(y_true)
-    y_pred_pos = K.flatten(y_pred)
+    y_true = K.flatten(y_true)
+    y_pred = K.flatten(y_pred)
     
     tp = K.sum(y_true_pos*y_pred_pos)
     fp = alpha * K.sum(y_true_pos * (1 - y_pred_pos))
@@ -26,6 +26,8 @@ def tversky(y_true, y_pred, alpha=0.5, beta=0.5):
     denominator = tp + fp + fn + K.epsilon()
     score = numerator / denominator
     return 1.0 - score
+
+
 
 def focalTversky(y_true, y_pred,gamma=0.75):
     pt_1=tversky(y_true, y_pred)
@@ -107,13 +109,6 @@ def recall(y_t, y_pred):#recall = TP / (TP + FN)
     fn = false_negatives(y_t, y_pred)
     return K.sum(tp) / (K.sum(tp) + K.sum(fn)+K.epsilon())
 
-# def specificity(y_t, y_pred):
-#     """compute specificity """
-# #     y_t = y_true[...,0]
-# #     y_t = y_t[...,np.newaxis]
-#     tn = true_negatives(y_t, y_pred)
-#     fp = false_positives(y_t, y_pred)
-#     return K.sum(tn) / (K.sum(tn) + K.sum(fp))
 
 def precision(y_t, y_pred):
     """precision"""

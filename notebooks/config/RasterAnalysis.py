@@ -11,15 +11,15 @@ class Configuration:
     '''
     def __init__(self):
         
-        self.input_image_dir = r'G:\occurrence_img'
+        self.input_image_dir = r'/media/nkd/backup/4_GSW/occurrence'
         self.input_image_type = '.tif'
         self.GSW_fn_st =  'occurrence'
-        self.trained_model_path =r'G:\U-Net\U-Net\saved_models\UNet\lakes_20230625-1012_AdaDelta_moved_bce_dice_loss28_01_512.h5'
+        self.trained_model_path =r'/home/nkd/hbh/U_Net_GSW/saved_models/UNet/lakes_20240228-1124_AdaDelta_tversky_01_512.h5'
         print('self.trained_model_path:', self.trained_model_path)
         
-        self.output_dir = r'G:\occurrence_output'
+        self.output_dir = '/media/nkd/backup/4_GSW/occurrence_result/tif'
         self.output_image_type = '.tif'
-        self.output_prefix = 'det_'  
+        self.output_prefix = 'det'  
         self.output_shapefile_type = '.shp'
         self.overwrite_analysed_files =False
         self.output_dtype='uint8'

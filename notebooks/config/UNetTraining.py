@@ -9,9 +9,9 @@ class Configuration:
         # Initialize the data related variables used in the notebook
         # For reading the GSW and annotated images generated in the Preprocessing step.
         # In most cases, they will take the same value as in the config/Preprocessing.py
-        
-        self.base_dir = r'D:\lakemapping\U_Net_GSW' 
-        self.patch_dir=os.path.join(self.base_dir,'patches512')
+        self.base_dir = '/home/nkd/hbh/U_Net_GSW'
+        # self.base_dir = r'D:\lakemapping\U_Net_GSW' 
+        # self.patch_dir=os.path.join(self.base_dir,'patches512')
         
         self.image_type = '.png'       
         self.GSW_fn = 'occurrence'
@@ -26,7 +26,7 @@ class Configuration:
         self.step_size2 = (256,256)
         # The training areas are divided into training, validation and testing set. Note that training area can have different sizes, so it doesn't guarantee that the final generated patches (when using sequential stratergy) will be in the same ratio.
         self.test_ratio = 0.2
-        self.val_ratio = 0.25
+        self.val_ratio = 0.2
         
         # Probability with which the generated patches should be normalized  0 -> don't normalize,    1 -> normalize all  
         self.normalize =0 
@@ -41,7 +41,7 @@ class Configuration:
         self.NB_EPOCHS = 200
 
         # number of validation images to use
-        self.VALID_IMG_COUNT = 90       
+        self.VALID_IMG_COUNT = 300       
         # maximum number of steps_per_epoch in training
-        self.MAX_TRAIN_STEPS = 400 #steps_per_epoch=(num_train/batch_size)
+        self.MAX_TRAIN_STEPS = 750 #steps_per_epoch=(num_train/batch_size)
         self.model_path = os.path.join(self.base_dir, 'saved_models/UNet') 
