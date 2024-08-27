@@ -9,8 +9,8 @@ class Configuration:
         # Initialize the data related variables used in the notebook
         # For reading the GSW and annotated images generated in the Preprocessing step.
         # In most cases, they will take the same value as in the config/Preprocessing.py
-        self.base_dir = '/home/nkd/hbh/U_Net_GSW'
-        # self.base_dir = r'D:\lakemapping\U_Net_GSW' 
+#         self.base_dir = '/home/nkd/hbh/U_Net_GSW'
+        self.base_dir = r'D:\lakemapping\U_Net_GSW' 
         # self.patch_dir=os.path.join(self.base_dir,'patches512')
         
         self.image_type = '.png'       

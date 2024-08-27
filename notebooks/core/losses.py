@@ -15,14 +15,13 @@ def tversky(y_true, y_pred, alpha=0.5, beta=0.5):
     :return: the loss
     """  
     
-    y_true = K.flatten(y_true)
-    y_pred = K.flatten(y_pred)
+    y_true_f = K.flatten(y_true)
+    y_pred_f = K.flatten(y_pred)
     
-    tp = K.sum(y_true_pos*y_pred_pos)
-    fp = alpha * K.sum(y_true_pos * (1 - y_pred_pos))
-    fn = beta * K.sum((1 - y_true_pos) * y_pred_pos)
-    EPSILON = 1
-    numerator = tp + K.epsilon()
+    tp = K.sum(y_true_f*y_pred_f)
+    fp = alpha * K.sum(y_true_f * (1 - y_pred_f))
+    fn = beta * K.sum((1 - y_true_f) * y_pred_f)
+    numerator = tp + + K.epsilon()
     denominator = tp + fp + fn + K.epsilon()
     score = numerator / denominator
     return 1.0 - score
@@ -92,13 +91,10 @@ def false_negatives(y_true, y_pred):
 
 def IoU(y_t, y_pred):#the Intersection-Over-Union metric.
     # IoU = TP / (TP + FP + FN)
-#     y_t = y_true[...,0]
-#     y_t = y_t[...,np.newaxis]
     tp = true_positives(y_t, y_pred)
-    tn = true_negatives(y_t, y_pred)
     fp = false_positives(y_t, y_pred)
     fn = false_negatives(y_t, y_pred)
-    return 0.5*(K.sum(tp)/(K.sum(tp)+K.sum(fp)+K.sum(fn))+K.sum(tn)/(K.sum(tn)+K.sum(fp)+K.sum(fn))+K.epsilon())
+    return K.sum(tp)/(K.sum(tp)+K.sum(fp)+K.sum(fn)+K.epsilon())
     
 
 def recall(y_t, y_pred):#recall = TP / (TP + FN)
@@ -117,3 +113,9 @@ def precision(y_t, y_pred):
     tp = true_positives(y_t, y_pred)
     fp = false_positives(y_t, y_pred)
     return K.sum(tp) / (K.sum(tp) + K.sum(fp)+K.epsilon())
+
+
+def F1_score(y_t, y_pred):
+    re = recall(y_t, y_pred)
+    pr = precision(y_t, y_pred)
+    return 2*pr*re/(re+pr+K.epsilon())
